@@ -17,13 +17,13 @@ public class Locker {
     @Column(name = "is_empty")
     private boolean isEmpty;
     @Column(name = "location_id")
-    private int location_id;
+    private int locationId;
 
     @Column(name = "status")
     private String status;
     public Locker(){}
     public int getLocation_id() {
-        return location_id;
+        return locationId;
     }
     public int getLockNum() {
         return lockNum;
@@ -38,7 +38,7 @@ public class Locker {
         isEmpty = empty;
     }
     public void setLocation_id(int location_id) {
-        this.location_id = location_id;
+        this.locationId = location_id;
     }
     public void setLockNum(int lockNum) {
         this.lockNum = lockNum;
@@ -70,7 +70,7 @@ public class Locker {
                 ", lockNum=" + lockNum +
                 ", openCode=" + openCode +
                 ", isEmpty=" + isEmpty +
-                ", location_id=" + location_id +
+                ", location_id=" + locationId +
                 ", status=" + status +
                 '}';
     }

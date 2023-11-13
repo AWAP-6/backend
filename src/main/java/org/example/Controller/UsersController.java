@@ -11,8 +11,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class UsersController {
     @Autowired
     private UsersService usersService;
-    @GetMapping
-    public String getAllUsers(){
-        return usersService.getAllUsers().toString();
+
+    @GetMapping()
+    public String defaultPage() {
+        return "this is default page";
+    }
+
+    @GetMapping("/test")
+    public String testPage() {
+        return "tests";
     }
 }

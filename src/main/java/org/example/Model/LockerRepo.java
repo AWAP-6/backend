@@ -10,6 +10,6 @@ import java.util.Optional;
 @Repository
 public interface LockerRepo extends JpaRepository<Locker, Integer> {
     Optional<Locker> findByOpenCode(Integer openCode);
-    List<Locker> findByIsEmptyTrue();
-    List<Locker> findByIsEmptyFalse();
+    List<Locker> findByIsEmptyTrueAndLocationId(int locationId);
+    List<Locker> findByIsEmptyFalseAndLocationId(int locationId);
 }

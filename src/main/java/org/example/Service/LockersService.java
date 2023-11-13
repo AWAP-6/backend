@@ -47,8 +47,8 @@ public class LockersService {
         return false;
     }
 
-    public boolean updateLockerStatus(int lockerId, String operation) {
-        Optional<Locker> lockerOpt = lockerRepo.findById(lockerId);
+    public boolean updateLockerStatus(int locationId, String operation) {
+        Optional<Locker> lockerOpt = lockerRepo.findById(locationId);
         if (lockerOpt.isPresent()) {
             Locker locker = lockerOpt.get();
             locker.setStatus(LockerUtil.changeStatus(locker.getStatus(), operation));
@@ -58,11 +58,11 @@ public class LockersService {
         return false;
     }
 
-    public List<Locker> getEmpty(boolean isEmpty) {
+    public List<Locker> getEmpty(int locationId, boolean isEmpty) {
         if (isEmpty) {
-            return lockerRepo.findByIsEmptyTrue();
+            return lockerRepo.findByIsEmptyTrueAndLocationId(locationId);
         } else {
-            return lockerRepo.findByIsEmptyFalse();
+            return lockerRepo.findByIsEmptyFalseAndLocationId(locationId);
         }
     }
 }
