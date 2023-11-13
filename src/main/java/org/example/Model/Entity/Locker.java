@@ -5,16 +5,22 @@ import javax.persistence.*;
 @Entity
 @Table(name = "lockers", schema = "lockers_schema")
 public class Locker {
-    @Column(name = "lock_num")
-    private int lockNum;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private int id;
+    @Column(name = "lock_num")
+    private int lockNum;
+
     @Column(name = "open_code")
     private int openCode;
     @Column(name = "is_empty")
     private boolean isEmpty;
     @Column(name = "location_id")
     private int location_id;
+
+    @Column(name = "status")
+    private String status;
     public Locker(){}
     public int getLocation_id() {
         return location_id;
@@ -41,13 +47,31 @@ public class Locker {
         this.openCode = openCode;
     }
 
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
     @Override
     public String toString() {
         return "Locker{" +
-                "lockNum=" + lockNum +
+                "id=" + id +
+                ", lockNum=" + lockNum +
                 ", openCode=" + openCode +
                 ", isEmpty=" + isEmpty +
                 ", location_id=" + location_id +
+                ", status=" + status +
                 '}';
     }
 }

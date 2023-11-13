@@ -1,7 +1,7 @@
 package org.example.Service;
 
 import org.example.Model.Entity.Users;
-import org.example.Model.Entity.UsersRepo;
+import org.example.Model.UsersRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,4 +14,5 @@ public class UsersService {
     public ArrayList<Users> getAllUsers(){
         return new ArrayList<Users>(usersRepo.findAll());
     }
+
 }

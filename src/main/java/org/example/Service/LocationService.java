@@ -1,7 +1,7 @@
 package org.example.Service;
 
 import org.example.Model.Entity.Location;
-import org.example.Model.Entity.LocationRepo;
+import org.example.Model.LocationRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
