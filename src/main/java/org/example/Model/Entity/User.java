@@ -28,7 +28,7 @@ public class User implements UserDetails {
     @Column(name = "password", length = 1000)
     private String password;
     @Column(name = "lockerlocation_id")
-    private Integer lockerlocation_id;
+    private Integer lockerLocationId;
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_roles", schema = "lockers_schema", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)

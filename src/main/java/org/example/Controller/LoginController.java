@@ -1,50 +1,49 @@
 package org.example.Controller;
 
+import lombok.Data;
 import org.example.Model.Entity.User;
 import org.example.Model.LocationRepo;
 import org.example.Service.LocationService;
 import org.example.Service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
+@CrossOrigin(origins = "http://localhost:3000/register")
 public class LoginController {
     @Autowired
     private UsersService usersService;
     @Autowired
     private LocationService locationService;
 
-    //    @GetMapping("/login")
-//    public String login() {
-//        return "login";
-//    }
-    @GetMapping("/registration")
-    public String registration(Model model) {
-        model.addAttribute("userForm", new User());
-        model.addAttribute("locations", locationService.getAllLocations());
-        return "registration";
-    }
+    @Data
+    public static class ApiResponse {
+        private boolean success;
+        private String message;
 
+       public ApiResponse(boolean success, String message){
+       }
+    }
     @PostMapping("/registration")
-    public String createUser(@ModelAttribute("userForm") User user, BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors()) {
-            return "registration";
+    public ResponseEntity<?> createUser(@RequestBody User user) {
+        ApiResponse apiResponse;
+        if (usersService.createUser(user)) {
+            apiResponse = new ApiResponse(true, "User created successfully.");
+            return ResponseEntity.ok().body(apiResponse);
+        } else {
+            apiResponse = new ApiResponse(false, "Error creating user.");
+            return ResponseEntity.badRequest().body(apiResponse);
         }
-        if (!usersService.createUser(user)) {
-            model.addAttribute("errorMessage", "Email " + user.getEmail() + " already exists");
-            return "registration";
-        }
-        return "redirect:/login";
     }
 
     @GetMapping("/hello")
-    public String securityUrl() {
-        return "hello";
+    public ResponseEntity<String> securityUrl() {
+        return ResponseEntity.ok("hello");
     }
 
 }
