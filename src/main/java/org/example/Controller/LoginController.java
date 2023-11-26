@@ -14,7 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000/register")
+@CrossOrigin(origins = "http://localhost:3000")
 public class LoginController {
     @Autowired
     private UsersService usersService;
@@ -27,6 +27,8 @@ public class LoginController {
         private String message;
 
        public ApiResponse(boolean success, String message){
+           this.success = success;
+           this.message = message;
        }
     }
     @PostMapping("/registration")
