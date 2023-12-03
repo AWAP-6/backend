@@ -1,6 +1,7 @@
 package org.example.Controller;
 
 import org.example.Model.Entity.Locker;
+import org.example.Service.EmailSenderService;
 import org.example.Service.LockersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/lockers")
+@CrossOrigin(origins = "http://localhost:3000")
 public class LockerController {
     @Autowired
     private LockersService lockersService;
@@ -27,13 +29,9 @@ public class LockerController {
             return "false";
         }
     }
-    @GetMapping("/checkStatus")
-    public String getStatus(@PathVariable int locationId,  @RequestParam String status){
-        if (lockersService.updateLockerStatus(locationId, status)) {
-            return "true";
-        } else {
-            return "false";
-        }
+    @GetMapping("/lockerStatus")
+    public String getStatus(@RequestParam Integer openCode) {
+        return lockersService.lockerStatus(openCode);
     }
 
     @GetMapping("/location/{locationId}/findEmpty")
@@ -41,9 +39,4 @@ public class LockerController {
         List<Locker> lockers = lockersService.getEmpty(locationId, isEmpty);
         return ResponseEntity.ok(lockers);
     }
-
-//    @GetMapping("/location/{locationId}/getOpenCodeAndStatus")
-//    public void getOpenCodeAndStatus(@PathVariable int locationId){
-//
-//    }
 }

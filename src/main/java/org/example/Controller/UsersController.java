@@ -13,7 +13,7 @@ public class UsersController {
     private UsersService usersService;
 
     @GetMapping("/delete")
-    public ResponseEntity<?> deleteUser(@RequestParam Long id){
+    public ResponseEntity<?> deleteUser(@RequestParam Long id) {
         if (usersService.deleteUser(id)) return ResponseEntity.ok().build();
         return ResponseEntity.badRequest().build();
     }

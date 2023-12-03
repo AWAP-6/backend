@@ -26,10 +26,10 @@ public class LoginController {
         private boolean success;
         private String message;
 
-       public ApiResponse(boolean success, String message){
-           this.success = success;
-           this.message = message;
-       }
+        public ApiResponse(boolean success, String message){
+            this.success = success;
+            this.message = message;
+        }
     }
     @PostMapping("/registration")
     public ResponseEntity<?> createUser(@RequestBody User user) {
@@ -43,10 +43,17 @@ public class LoginController {
         }
     }
 
-//    @PostMapping("/login")
-//    public ResponseEntity<?> loginUser(@RequestBody User user) {
-//        if (usersService.equals())
-//    }
+    @PostMapping("/login")
+    public ResponseEntity<?> loginUser(@RequestBody User user) {
+        ApiResponse apiResponse;
+        if (usersService.authenticateUser(user.getUsername(), user.getPassword())) {
+            apiResponse = new ApiResponse(true, "Login successfully.");
+            return ResponseEntity.ok().body(apiResponse);
+        } else {
+            apiResponse = new ApiResponse(false, "Invalid username or password");
+            return ResponseEntity.badRequest().body(apiResponse);
+        }
+    }
 
     @GetMapping("/hello")
     public ResponseEntity<String> securityUrl() {

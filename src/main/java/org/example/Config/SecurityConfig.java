@@ -5,6 +5,7 @@ import org.eclipse.jetty.client.api.Authentication;
 import org.example.Service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -25,14 +26,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/", "/registration", "/login", "/users")
+                .antMatchers("/", "/registration", "/login", "/users/delete", "/lockers/checkOpenCode", "/lockers/lockerStatus", "/lockers/sendMail", "/activation/act")
                 .permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
-//                .loginPage("/login")
-                .permitAll()
-                .and()
+                .disable()
                 .logout()
                 .permitAll();
     }
@@ -41,6 +40,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService)
                 .passwordEncoder(passwordEncoder());
+    }
+
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
     }
 
     @Bean

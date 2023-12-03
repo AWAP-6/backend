@@ -7,8 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,15 +45,10 @@ public class LockersService {
         return false;
     }
 
-    public boolean updateLockerStatus(int locationId, String operation) {
-        Optional<Locker> lockerOpt = lockerRepo.findById(locationId);
-        if (lockerOpt.isPresent()) {
-            Locker locker = lockerOpt.get();
-            locker.setStatus(LockerUtil.changeStatus(locker.getStatus(), operation));
-            lockerRepo.save(locker);
-            return true;
-        }
-        return false;
+    public String lockerStatus(Integer openCode){
+        Optional<Locker> lockerOpt = lockerRepo.findByOpenCode(openCode);
+        Locker locker = lockerOpt.get();
+        return locker.getStatus();
     }
 
     public List<Locker> getEmpty(int locationId, boolean isEmpty) {
