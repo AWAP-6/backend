@@ -30,7 +30,6 @@ public class LockersService {
             int attempts = 0;
             while (!saved && attempts < 5) {
                 try {
-                    locker.setOpenCode(LockerUtil.generateOpenCode());
                     lockerRepo.save(locker);
                     saved = true;
                 } catch (DataIntegrityViolationException e) {
@@ -44,11 +43,24 @@ public class LockersService {
         }
         return false;
     }
-
     public String lockerStatus(Integer openCode){
         Optional<Locker> lockerOpt = lockerRepo.findByOpenCode(openCode);
         Locker locker = lockerOpt.get();
         return locker.getStatus();
+    }
+    @Transactional
+    public boolean updateLockerStatus(Integer openCode, String status) {
+        Optional<Locker> lockerOpt = lockerRepo.findByOpenCode(openCode);
+        if (!lockerOpt.isPresent()) {
+            return false;
+        }
+        Locker locker = lockerOpt.get();
+        locker.setStatus(status);
+        lockerRepo.save(locker);
+
+        locker.setOpenCode(LockerUtil.generateOpenCode());
+        lockerRepo.save(locker);
+        return true;
     }
 
     public List<Locker> getEmpty(int locationId, boolean isEmpty) {

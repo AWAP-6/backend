@@ -5,6 +5,7 @@ import org.eclipse.jetty.client.api.Authentication;
 import org.example.Service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -22,12 +23,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .csrf((csfr) -> csfr.disable())
+                .csrf().disable()
                 .cors()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/", "/registration", "/login", "/users/delete", "/lockers/checkOpenCode", "/lockers/lockerStatus", "/lockers/sendMail", "/activation/act")
+                .antMatchers("/", "/registration", "/login", "/users/delete", "/lockers/checkOpenCode", "/lockers/lockerStatus","lockers/updateStatus", "/lockers/sendMail", "/activation/act")
                 .permitAll()
+                .antMatchers(HttpMethod.POST, "/lockers/updateStatus").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
