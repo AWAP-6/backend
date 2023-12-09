@@ -70,4 +70,23 @@ public class LockersService {
             return lockerRepo.findByIsEmptyFalseAndLocationId(locationId);
         }
     }
+
+    public Object getLockerStatusByLocationId(Integer locationId) {
+        List<Locker> lockers = lockerRepo.findByLocationId(locationId);
+        if (lockers == null || lockers.isEmpty()) {
+            throw new RuntimeException("Location with ID " + locationId + " not found.");
+        }
+        return lockers;
+    }
+
+    public boolean updateLockerStatus(int lockerId, String newStatus) {
+        Optional<Locker> lockerOpt = lockerRepo.findById(lockerId);
+        if (lockerOpt.isEmpty()) {
+            return false;
+        }
+        Locker locker = lockerOpt.get();
+        locker.setStatus(newStatus);
+        lockerRepo.save(locker);
+        return true;
+    }
 }

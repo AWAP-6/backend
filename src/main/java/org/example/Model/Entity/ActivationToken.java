@@ -18,7 +18,7 @@ public class ActivationToken {
     @Column(name = "token_id")
     private Long tokenId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 

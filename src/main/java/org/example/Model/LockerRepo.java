@@ -14,4 +14,8 @@ public interface LockerRepo extends JpaRepository<Locker, Integer> {
     List<Locker> findByIsEmptyFalseAndLocationId(int locationId);
     Optional<Locker> findById(Integer lockerId);
     Optional<Locker> findStatusByOpenCode(Integer openCode);
+
+    List<Locker> findByLocationId(int locationId);
+
+    Optional<Locker> findByStatusAndLocationId(int locationId, String status);
 }

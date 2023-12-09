@@ -58,4 +58,24 @@ public class LockerController {
         List<Locker> lockers = lockersService.getEmpty(locationId, isEmpty);
         return ResponseEntity.ok(lockers);
     }
+
+    @GetMapping("/location/{locationId}/getStatus")
+    public ResponseEntity<?> getLocationStatus(@PathVariable int locationId) {
+        try {
+            Object locationStatus = lockersService.getLockerStatusByLocationId(locationId);
+            return new ResponseEntity<>(locationStatus, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Failed to get location status " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/{lockerId}/updateStatus")
+    public ResponseEntity<?> updateStatus(@PathVariable int lockerId, @RequestParam("status") String newStatus) {
+        boolean updateResult = lockersService.updateLockerStatus(lockerId, newStatus);
+        if (updateResult) {
+            return ResponseEntity.ok("Locker status updated successfully.");
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to update locker status.");
+        }
+    }
 }

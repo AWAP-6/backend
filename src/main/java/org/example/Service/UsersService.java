@@ -16,6 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.UUID;
 import java.util.Optional;
@@ -93,11 +94,17 @@ public class UsersService {
             return false;
         }
     }
+    @Transactional
     public boolean deleteUser(Long userId) {
         if (usersRepo.findById(userId).isEmpty()) return false;
-        roleRepo.deleteById(userId);
+//        System.out.println(usersRepo.findById(userId).get());
+        activationTokenRepo.deleteByUser( usersRepo.findById(userId).get());
         usersRepo.deleteById(userId);
-//        activationTokenRepo.deleteById(userId);
         return true;
+    }
+
+
+    public void showUser(Long userId){
+        System.out.println(usersRepo.findById(userId).get());
     }
 }
