@@ -103,6 +103,10 @@ public class UsersService {
         return true;
     }
 
+    public User getUserByUsername(String username) {
+        return usersRepo.findByUsername(username);
+    }
+
 
     public void showUser(Long userId){
         System.out.println(usersRepo.findById(userId).get());
