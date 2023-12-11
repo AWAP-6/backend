@@ -27,7 +27,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/", "/registration", "/logout" ,"/users/test/**", "/login/**", "/lockers/**","/parcels/add" , "/users/delete/**","/lockers//{lockerId}/updateStatus" , "/lockers/checkOpenCode","/lockers/location/{locationId}/getStatus", "/lockers/lockerStatus","lockers/updateStatus", "/lockers/sendMail", "/activation/act")
+                .antMatchers("/", "/registration", "/users/test/**", "/login/**", "/lockers/**","/parcels/add" ,"/parcels", "/users/delete/**","/lockers//{lockerId}/updateStatus" , "/lockers/checkOpenCode","/lockers/location/{locationId}/getStatus", "/lockers/lockerStatus","lockers/updateStatus", "/lockers/sendMail", "/activation/act")
                 .permitAll()
                 .antMatchers(HttpMethod.POST, "/lockers/updateStatus").permitAll()
                 .anyRequest().authenticated()
@@ -35,7 +35,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .disable()
                 .logout()
-                .logoutSuccessUrl("/hello")
                 .permitAll();
     }
 
