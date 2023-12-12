@@ -35,33 +35,39 @@ import javax.servlet.http.HttpServletResponse;
         private String message;
         private User user;
 
-        public ApiResponse(boolean success, String message){
+        public ApiResponse(boolean success, String message, User user){
             this.success = success;
             this.message = message;
+            this.user = user;
         }
     }
     @PostMapping("/registration")
     public ResponseEntity<?> createUser(@RequestBody User user) {
         ApiResponse apiResponse;
         if (usersService.createUser(user)) {
-            apiResponse = new ApiResponse(true, "User created successfully.");
+            apiResponse = new ApiResponse(true, "User created successfully.", null);
             return ResponseEntity.ok().body(apiResponse);
         } else {
-            apiResponse = new ApiResponse(false, "Error creating user.");
+            apiResponse = new ApiResponse(false, "Error creating user.", null);
             return ResponseEntity.badRequest().body(apiResponse);
         }
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> loginUser(@RequestBody User user) {
+    public ResponseEntity<ApiResponse> loginUser(@RequestBody User user) {
         ApiResponse apiResponse;
         if (usersService.authenticateUser(user.getUsername(), user.getPassword())) {
             User authenticatedUser = usersService.getUserByUsername(user.getUsername());
 
-            apiResponse = new ApiResponse(true, "Login successfully.");
-            return ResponseEntity.ok().body(apiResponse);
+            if (authenticatedUser != null) {
+                apiResponse = new ApiResponse(true, "Login successfully.", authenticatedUser);
+                return ResponseEntity.ok().body(apiResponse);
+            } else {
+                apiResponse = new ApiResponse(false, "User not found.", null);
+                return ResponseEntity.badRequest().body(apiResponse);
+            }
         } else {
-            apiResponse = new ApiResponse(false, "Invalid username or password");
+            apiResponse = new ApiResponse(false, "Invalid username or password", null);
             return ResponseEntity.badRequest().body(apiResponse);
         }
     }
