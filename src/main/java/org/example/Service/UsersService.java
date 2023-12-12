@@ -37,7 +37,7 @@ public class UsersService {
         String activationTokenString = UUID.randomUUID().toString();
         UUID activationTokenUUID = UUID.fromString(activationTokenString);
         LocalDateTime expirationDate = LocalDateTime.now().plusMinutes(15);
-        String activationUrl = "http://localhost:3000/activate?token=" + activationTokenString;
+        String activationUrl = "https://consumerapp.onrender.com/activate?token=" + activationTokenString;
         String email = user.getEmail();
         User existingUser = usersRepo.findByEmail(user.getEmail());
         if (existingUser != null) {
