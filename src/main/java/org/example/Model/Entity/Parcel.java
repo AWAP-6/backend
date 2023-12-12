@@ -30,8 +30,10 @@ public class Parcel {
     private String recipientEmail;
     @Column(name = "recipient_address")
     private String recipientAddress;
-    @Column(name = "lockerlocation_id")
-    private Integer lockerLocationId;
+    @Column(name = "from_location")
+    private Integer fromLocation;
+    @Column(name = "to_location")
+    private Integer toLocation;
 
     public Parcel() {
     }

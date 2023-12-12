@@ -33,6 +33,7 @@ import javax.servlet.http.HttpServletResponse;
     public static class ApiResponse {
         private boolean success;
         private String message;
+        private User user;
 
         public ApiResponse(boolean success, String message){
             this.success = success;
@@ -55,6 +56,8 @@ import javax.servlet.http.HttpServletResponse;
     public ResponseEntity<?> loginUser(@RequestBody User user) {
         ApiResponse apiResponse;
         if (usersService.authenticateUser(user.getUsername(), user.getPassword())) {
+            User authenticatedUser = usersService.getUserByUsername(user.getUsername());
+
             apiResponse = new ApiResponse(true, "Login successfully.");
             return ResponseEntity.ok().body(apiResponse);
         } else {
