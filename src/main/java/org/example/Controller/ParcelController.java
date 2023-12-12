@@ -12,8 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/parcels")
-@CrossOrigin(origins = "http://localhost:3000")
-public class ParcelController {
+@CrossOrigin(origins = {"https://touchscreen.onrender.com", "https://driverapp-c1h1.onrender.com", "https://consumerapp.onrender.com"})public class ParcelController {
 
     @Autowired
     private ParcelService parcelService;

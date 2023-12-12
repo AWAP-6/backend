@@ -15,7 +15,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/lockers")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"https://touchscreen.onrender.com", "https://driverapp-c1h1.onrender.com", "https://consumerapp.onrender.com"})
 public class LockerController {
     @Autowired
     private LockersService lockersService;
