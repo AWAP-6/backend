@@ -15,7 +15,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/lockers")
-@CrossOrigin(origins = {"https://touchscreen.onrender.com", "https://driverapp-c1h1.onrender.com", "https://consumerapp.onrender.com"})
+@CrossOrigin(origins = "https://touchscreen.onrender.com")
 public class LockerController {
     @Autowired
     private LockersService lockersService;
@@ -25,6 +25,7 @@ public class LockerController {
     public String getAllLockers(){
         return lockersService.getAllLockers().toString();
     }
+    @CrossOrigin(origins = "https://touchscreen.onrender.com")
     @GetMapping("/checkOpenCode")
     public String getOpenCode(@RequestParam Integer openCode){
         if (lockersService.openLocker(openCode)) {
