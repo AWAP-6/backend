@@ -21,7 +21,7 @@ import java.util.ArrayList;
         return ResponseEntity.ok("Parcel added successfully");
     }
 
-    @GetMapping
+    @GetMapping("/get")
     public ResponseEntity<ArrayList<Parcel>> getParcelsBySenderEmail(@RequestParam String sender_email) {
         ArrayList<Parcel> parcels = (ArrayList<Parcel>) parcelService.getParcelsBySenderEmail(sender_email);
         return ResponseEntity.ok(parcels);
