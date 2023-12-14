@@ -24,8 +24,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
-                .cors()
-                .and()
+                .cors().disable()
                 .authorizeRequests()
                 .antMatchers("/","/lockers/**" ,  "/registration","/parcels", "/parcels/get",  "/parcels/add","/hello" ,"/logout" , "/login?logout", "/users/test/**", "/login/**", "/lockers/**", "/users/delete/**","/lockers/{lockerId}/updateStatus" , "/lockers/checkOpenCode","/lockers/location/{locationId}/getStatus", "/lockers/lockerStatus","lockers/updateStatus", "/lockers/sendMail", "/activation/act")
                 .permitAll()

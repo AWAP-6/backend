@@ -15,7 +15,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/lockers")
-@CrossOrigin(origins = "https://touchscreen.onrender.com")
+@CrossOrigin(origins = {"https://touchscreen.onrender.com", "https://driverapp-c1h1.onrender.com", "https://consumerapp.onrender.com"})
 public class LockerController {
     @Autowired
     private LockersService lockersService;
@@ -53,7 +53,6 @@ public class LockerController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to update locker status.");
         }
     }
-
     @GetMapping("/location/{locationId}/findEmpty")
     public ResponseEntity<List<Locker>> getEmpty(@PathVariable int locationId, @RequestParam boolean isEmpty){
         List<Locker> lockers = lockersService.getEmpty(locationId, isEmpty);
