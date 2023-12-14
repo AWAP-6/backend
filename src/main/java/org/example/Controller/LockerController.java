@@ -25,7 +25,6 @@ public class LockerController {
     public String getAllLockers(){
         return lockersService.getAllLockers().toString();
     }
-    @CrossOrigin(origins = "https://touchscreen.onrender.com")
     @GetMapping("/checkOpenCode")
     public String getOpenCode(@RequestParam Integer openCode){
         if (lockersService.openLocker(openCode)) {
